@@ -5,6 +5,7 @@ import io from 'socket.io-client';
 const App = () => {
   const [socket, setSocket] = useState(null);
   const [play, setPlay] = useState(false);
+  const [receivedtime, setReceivedtime] = useState('');
 
   useEffect(() => {
     // const newSocket = io.connect("http://localhost:5000");
@@ -37,6 +38,7 @@ const App = () => {
       socket.on('signalingRecieved', () =>{
         const timeNow = Date.now();
         console.log('받은 시간' + ' ' + timeNow);
+        setReceivedtime(`받은 시간: ${timeNow}`);
         handlePlayVideo();
       })
     }
@@ -51,6 +53,7 @@ const App = () => {
         url="https://youtu.be/BIjUkimguWw?si=0jk31VhacHpakY4C"
         playing={play}
       />
+      <p>{receivedtime}</p>
     </div>
   )
 }

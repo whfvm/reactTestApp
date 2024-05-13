@@ -50,7 +50,7 @@ const App = () => {
       <button onClick={socketband}>방 입장</button>
       <button onClick={socketSignaling}>시그널링</button>
       <ReactPlayer
-        url="https://youtu.be/BIjUkimguWw?si=0jk31VhacHpakY4C"
+        url="https://youtu.be/3l9K9bZIacg?si=h7qdPrrGz-MMen-L"
         playing={play}
       />
       <p>{receivedtime}</p>

@@ -6,6 +6,8 @@ const App = () => {
   const [socket, setSocket] = useState(null);
   const [play, setPlay] = useState(false);
   const [receivedtime, setReceivedtime] = useState('');
+  const [countingnumbers, setCountingnumbers] = useState(0);
+  const [intervalId, setIntervalId] = useState(null);
 
   useEffect(() => {
     // const newSocket = io.connect("http://localhost:5000");
@@ -14,8 +16,9 @@ const App = () => {
 
     return () => {
       newSocket.disconnect(); // 컴포넌트가 언마운트될 때 소켓 연결 해제
+      if(intervalId) clearInterval(intervalId);
     };
-  }, []);
+  }, [intervalId]);
 
   const socketband = () => {
     if(socket) {
@@ -33,6 +36,14 @@ const App = () => {
     setPlay(prevPlay => !prevPlay)
   };
 
+  const handleCountingNumbers = () => {
+    if(intervalId) clearInterval(intervalId);
+    const newIntervalId = setInterval(() => {
+      setCountingnumbers(prevCountingnumbers => prevCountingnumbers + 1);
+    }, 100);
+    setIntervalId(newIntervalId);
+  }
+
   useEffect(() =>{
     if(socket) {
       socket.on('signalingRecieved', () =>{
@@ -40,6 +51,7 @@ const App = () => {
         console.log('받은 시간' + ' ' + timeNow);
         setReceivedtime(`받은 시간: ${timeNow}`);
         handlePlayVideo();
+        handleCountingNumbers();
       })
     }
   },[socket])
@@ -54,6 +66,7 @@ const App = () => {
         playing={play}
       />
       <p>{receivedtime}</p>
+      <p>{countingnumbers}</p>
     </div>
   )
 }

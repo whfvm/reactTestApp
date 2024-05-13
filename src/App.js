@@ -29,7 +29,7 @@ const App = () => {
   }
 
   const handlePlayVideo = () => {
-    setPlay(true);
+    setPlay(prevPlay => !prevPlay)
   };
 
   useEffect(() =>{

@@ -8,8 +8,8 @@ const App = () => {
   const [receivedtime, setReceivedtime] = useState('');
 
   useEffect(() => {
-    // const newSocket = io.connect("http://localhost:5000");
-    const newSocket = io.connect("https://port-0-whfdjq-rccln2llw366w94.sel5.cloudtype.app");
+    const newSocket = io.connect("http://localhost:5000");
+    // const newSocket = io.connect("https://port-0-whfdjq-rccln2llw366w94.sel5.cloudtype.app");
     setSocket(newSocket);
 
     return () => {
@@ -44,11 +44,26 @@ const App = () => {
     }
   },[socket])
 
+  const socketPing = () => {
+    if(socket) {
+      socket.emit('ping');
+    }
+  }
+
+  useEffect(() =>{
+    if(socket) {
+      socket.on('pingRecieved', () =>{
+        socket.emit('answer');
+      })
+    }
+  },[socket])
+
   return(
     <div>
       <h1>Real-Time Data Exchange with RTCDataChannel</h1>
       <button onClick={socketband}>방 입장</button>
       <button onClick={socketSignaling}>시그널링</button>
+      <button onClick={socketPing}>딜레이 체크</button>
       <ReactPlayer
         url="https://youtu.be/3l9K9bZIacg?si=h7qdPrrGz-MMen-L"
         playing={play}

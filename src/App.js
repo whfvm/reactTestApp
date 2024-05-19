@@ -70,6 +70,20 @@ const App = () => {
     }
   },[socket])
 
+  const socketPing = () => {
+    if(socket) {
+      socket.emit('ping');
+    }
+  }
+
+  useEffect(() =>{
+    if(socket) {
+      socket.on('pingRecieved', () =>{
+        socket.emit('answer');
+      })
+    }
+  },[socket])
+
   return(
     <div>
       <h1>Real-Time Data Exchange with RTCDataChannel</h1>

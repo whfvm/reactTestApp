@@ -10,8 +10,8 @@ const App = () => {
   const [intervalId, setIntervalId] = useState(null);
 
   useEffect(() => {
-    const newSocket = io.connect("http://localhost:5000");
-    // const newSocket = io.connect("https://port-0-whfdjq-rccln2llw366w94.sel5.cloudtype.app");
+    // const newSocket = io.connect("http://localhost:5000");
+    const newSocket = io.connect("https://port-0-whfdjq-rccln2llw366w94.sel5.cloudtype.app");
     setSocket(newSocket);
 
     return () => {
@@ -66,6 +66,14 @@ const App = () => {
     if(socket) {
       socket.on('pingRecieved', () =>{
         socket.emit('answer');
+      })
+    }
+  },[socket])
+
+  useEffect(() => {
+    if(socket) {
+      socket.on('answerRecieved', (data) => {
+        console.log("dealay" + data)
       })
     }
   },[socket])
